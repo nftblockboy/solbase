@@ -1,0 +1,1 @@
+export { getAppEnv } from "./env";

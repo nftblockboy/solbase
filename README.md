@@ -14,6 +14,15 @@ SolBase is designed to help developers build Solana-based APIs, apps, and servic
 
 ---
 
+## Monorepo Layout
+
+- `apps/web`: Next.js app router frontend.
+- `packages/platform`, `packages/ai-agents`, `packages/crypto`, `packages/ui`: shared workspace packages.
+- `jobs/*`: scheduled/reporting workers.
+- Go API remains at repo root (`main.go`) and runs on `:3001`.
+
+---
+
 ## ✨ Features
 
 * **Managed Wallet & Key Storage** — Generate and store user wallets securely.

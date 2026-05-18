@@ -30,3 +30,14 @@ go.work.sum
 # Editor/IDE
 # .idea/
 # .vscode/
+
+# Node / monorepo
+node_modules/
+.pnpm-store/
+.turbo/
+dist/
+.next/
+
+# Prisma
+prisma/dev.db
+prisma/dev.db-journal
