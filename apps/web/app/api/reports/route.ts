@@ -1,18 +1,7 @@
+import { createMockReportArchive } from "@solbase/ai-agents";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  return NextResponse.json({
-    reports: [],
-    status: "ok"
-  });
-}
-
-export async function POST() {
-  return NextResponse.json(
-    {
-      id: "report_stub",
-      status: "queued"
-    },
-    { status: 202 }
-  );
+  const reports = createMockReportArchive();
+  return NextResponse.json({ reports });
 }

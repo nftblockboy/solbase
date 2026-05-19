@@ -24,9 +24,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="w-full h-screen">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased w-full h-screen flex flex-col items-center justify-center`}
       >
         <Providers>{children}</Providers>
       </body>

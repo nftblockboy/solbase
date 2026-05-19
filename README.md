@@ -1,281 +1,137 @@
-# SolBase API
+# Solbase
 
-**Seamlessly on-ramp backend infrastructure for Solana apps.**
+**A basic prediction marketplace on Solana.**
 
-SolBase provides a drop-in backend for Solana applications: managed wallets, secure transaction signing, RPC proxying & caching, webhook subscriptions, SPL utilities, and complete developer SDKs—so you can ship features faster without building blockchain infra from scratch.
-
----
-
-## 🚀 Overview
-
-SolBase is designed to help developers build Solana-based APIs, apps, and services with minimal overhead. It abstracts away the complexity of managing RPC connections, signing flows, subscription handling, token operations, and backend infrastructure.
-
-**Build features, not boilerplate.**
+Create markets, trade on outcomes, and settle positions with a connected wallet.
 
 ---
 
-## Monorepo Layout
+## Overview
 
-- `apps/web`: Next.js app router frontend.
-- `packages/platform`, `packages/ai-agents`, `packages/crypto`, `packages/ui`: shared workspace packages.
-- `jobs/*`: scheduled/reporting workers.
-- Go API remains at repo root (`main.go`) and runs on `:3001`.
+Solbase is a Solana-native prediction marketplace where users speculate on real-world outcomes. Markets pose simple questions—often binary (yes/no) or a small set of outcomes—and participants buy shares in the result they believe will happen.
 
----
+The core loop:
 
-## ✨ Features
+1. **Markets** — Browse questions with clear resolution criteria (e.g. “Will X happen by date Y?”).
+2. **Trading** — Connect a Solana wallet and take a position on an outcome.
+3. **Resolution** — When the market settles, winning shares are redeemed.
 
-* **Managed Wallet & Key Storage** — Generate and store user wallets securely.
-* **Secure Signing Service** — Server-side transaction signing with auditing.
-* **RPC Proxy & Caching** — High‑performance RPC passthrough with retry logic & caching.
-* **Webhooks & Event Subscriptions** — Receive account change events, program logs, SPL transfers, and more.
-* **Transaction Sending & Simulation** — Built-in simulation, batching, and retry queues.
-* **SPL Token Tools** — Mint, transfer, manage ATAs, and handle token lifecycle flows.
-* **Developer SDKs** — JS/TS, Go, and Python clients.
-* **Permissions & API Keys** — Role-based access and scoped API keys.
-* **Observability Dashboard** — Metrics, logs, tracing, and monitoring.
+This repo is early-stage: wallet connection and UI foundations exist in the web app; market listing, trading, and settlement flows are under active development.
 
 ---
 
-## 🧱 Architecture Goals
+## Features
 
-* Fast integration for developers launching Solana apps
-* Safe & secure transaction management
-* Highly scalable backend with clear SLAs
-* Multi-tenant support and key isolation
-* Drop-in local development environment
+| Area | Status |
+|------|--------|
+| **Wallet** | Connect via Wallet Standard (Phantom, Solflare, Backpack, etc.) |
+| **Markets** | Browse and view prediction markets — planned |
+| **Positions** | Take positions on outcomes — planned |
+| **Settlement** | Resolve markets and distribute payouts — planned |
+
+### Current status
+
+The monorepo includes a Next.js frontend with Solana wallet integration and shared UI components. Prediction market flows (create, trade, resolve) are the next build-out.
 
 ---
 
-## 🛠️ API Endpoints
+## Tech stack
 
-Below are representative routes. Full OpenAPI spec available soon.
+- **Frontend:** Next.js 16 (`apps/web`), React 19, Tailwind CSS
+- **Chain:** Solana — `@solana/react-hooks`, Wallet Standard connectors
+- **Monorepo:** pnpm workspaces + Turborepo
+- **Shared packages:** `packages/platform`, `packages/ui`, `packages/crypto`, `packages/ai-agents` (auxiliary scout/report workflows)
+- **Jobs:** `jobs/*` — background workers (e.g. market data refresh, reports)
+- **Backend:** `main.go` at repo root — Go API placeholder for future market/trading services
 
-### Authentication
+---
 
-**POST /v1/auth/token**
+## Monorepo layout
 
-```json
-{
-  "apiKey": "sk_live_..."
-}
 ```
-
-Response:
-
-```json
-{
-  "access_token": "ey...",
-  "expires_in": 3600
-}
-```
-
-### Wallets
-
-**Create Wallet**
-
-POST `/v1/wallets`
-
-```json
-{
-  "user_id": "user-123",
-  "purpose": "app-wallet",
-  "derivation": "ed25519-standard",
-  "store_policy": "encrypted"
-}
-```
-
-Response:
-
-```json
-{
-  "wallet_id": "w_abc123",
-  "pubkey": "9xW...",
-  "created_at": "2025-12-03T..."
-}
-```
-
-**Get Wallet**
-
-GET `/v1/wallets/{wallet_id}`
-
-```json
-{
-  "pubkey": "..."
-}
-```
-
-### Signing
-
-**Sign Transaction**
-
-POST `/v1/wallets/{wallet_id}/sign`
-
-```json
-{
-  "message": "<base64-encoded-transaction-message>",
-  "nonce": "...",
-  "metadata": { "trace_id": "..." }
-}
-```
-
-Response:
-
-```json
-{
-  "signed_tx": "<base64-signed-tx>",
-  "signature": "5f..."
-}
-```
-
-### RPC Proxy
-
-POST `/v1/rpc`
-
-```json
-{
-  "method": "getProgramAccounts",
-  "params": ["<programPubkey>", { "commitment": "confirmed" }],
-  "cache_for_seconds": 15
-}
-```
-
-### Sending Transactions
-
-POST `/v1/transactions/send`
-
-```json
-{
-  "signed_tx": "<base64-signed-tx>",
-  "wallet_id": "w_abc123",
-  "simulate_first": true
-}
-```
-
-Response:
-
-```json
-{
-  "txid": "5G...",
-  "status": "submitted"
-}
-```
-
-### Subscriptions & Webhooks
-
-POST `/v1/subscriptions`
-
-```json
-{
-  "type": "account_change",
-  "account": "So11111111111111111111111111111111111111112",
-  "callback_url": "https://example.com/webhook",
-  "filters": { "minLamports": 1000 }
-}
-```
-
-Webhook payload:
-
-```json
-{
-  "subscription_id": "sub_01",
-  "account": "...",
-  "slot": 12345678,
-  "data_base64": "....",
-  "timestamp": "2025-12-03T..."
-}
+apps/web            # Next.js prediction market UI
+packages/ui         # Shared UI components
+packages/platform   # Shared types and schemas
+packages/crypto     # Crypto utilities
+packages/ai-agents  # Agent workflows (reports)
+jobs/*              # Background workers
+main.go             # Go API (placeholder)
 ```
 
 ---
 
-## 📦 SDK Interfaces
+## Architecture
 
-### JavaScript Example
-
-```js
-import SolBase from "solbase-js";
-
-const client = new SolBase.Client({ apiKey: process.env.SOLBASE_KEY, env: "devnet" });
-
-// Create user wallet
-const { wallet_id, pubkey } = await client.wallets.create("user-123");
-
-// Build & sign transfer
-const tx = await client.helpers.buildTransferTx({
-  from: pubkey,
-  to: "RecipientPubkeyHere",
-  amountLamports: 1_000_000
-});
-
-const signed = await client.wallets.sign(wallet_id, tx.messageBase64);
-const result = await client.transactions.send({ signed_tx: signed.signedTxBase64 });
-
-console.log("submitted tx:", result.txid);
+```mermaid
+flowchart LR
+  user[User] --> web[apps/web]
+  web --> wallet[SolanaWallet]
+  web --> api[FutureAPI]
+  api --> chain[Solana]
 ```
 
 ---
 
-## 🔒 Security
+## Getting started
 
-* Private keys never leave the backend or HSM.
-* Support for AWS KMS, GCP KMS, Azure KeyVault.
-* Encrypted storage for all sensitive data.
-* Role-based API access.
-* Nonce & replay protection.
-* Signed webhook verification.
-* Audit logs for all signing events.
+### Prerequisites
 
----
+- Node.js 20+
+- [pnpm](https://pnpm.io) 9.x (or use `npx` below)
 
-## 📊 Observability
+### Install and run the web app
 
-* RPC latency metrics
-* Cache hit ratios
-* Webhook delivery status & retries
-* Transaction queue depth
-* Dashboard for monitoring and debugging
+From the repo root:
 
----
+```bash
+pnpm install
+pnpm -F @solbase/web dev
+```
 
-## 💵 Pricing Model (Draft)
+Open [http://localhost:3000](http://localhost:3000).
 
-* **Free / Hobby** — limited wallets, devnet/testnet only.
-* **Team** — more wallets, RPC boost, webhook reliability.
-* **Business** — dedicated RPC pools, higher SLAs, audit logs.
-* **Enterprise** — KMS/HSM integration, custom infra, on‑prem.
+If `pnpm` is not on your PATH:
 
----
+```bash
+npx pnpm@9.12.2 install
+npx pnpm@9.12.2 -F @solbase/web dev
+```
 
-## 🧪 Local Development
+### Environment variables
 
-SolBase provides a dev environment that includes:
+Optional overrides in `apps/web` (or root `.env.local` loaded by Next.js):
 
-* Local RPC proxy
-* Mock signer
-* Webhook simulator
-* solana-test-validator integration
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_SOLANA_RPC_URL` | Solana RPC endpoint (defaults to devnet) |
+| `NEXT_PUBLIC_SOLANA_WS_URL` | WebSocket endpoint (derived from RPC if unset) |
 
----
+### Other commands
 
-## 📅 Roadmap
-
-* Full OpenAPI specification
-* CLI `solbase dev`
-* Expanded SDKs
-* Program-specific helpers (Raydium, Pump.fun, Jupiter)
-* Dashboard UI
+```bash
+pnpm dev          # Run all workspace dev tasks (Turbo)
+pnpm build        # Build all packages
+pnpm typecheck    # Typecheck all packages
+pnpm lint         # Lint all packages
+```
 
 ---
 
-## 🤝 Contributing
+## Roadmap
 
-PRs welcome! Please open issues for bugs, features, or SDK requests.
+- Market creation and listing
+- Backend or on-chain position tracking
+- Resolution and payout flow
+- Liquidity mechanism (order book or pool-based trading)
 
 ---
 
-## 📜 License
+## Contributing
+
+PRs welcome. Please open issues for bugs, features, or design discussion.
+
+---
+
+## License
 
 MIT
-
----
-
