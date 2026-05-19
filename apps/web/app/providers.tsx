@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { ThemeProvider } from "next-themes";
 import { SolanaProvider } from "@solana/react-hooks";
 import { autoDiscover, createClient } from "@solana/client";
 
@@ -18,5 +19,9 @@ export const solanaClient = createClient({
 });
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  return <SolanaProvider client={solanaClient}>{children}</SolanaProvider>;
+  return (
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <SolanaProvider client={solanaClient}>{children}</SolanaProvider>
+    </ThemeProvider>
+  );
 }

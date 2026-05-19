@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { NavBar, SiteFooter } from "@/components/core";
 import "./globals.css";
 import { Providers } from "./providers";
 
@@ -14,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Solana App",
-  description: "Solana wallet integration with Next.js"
+  title: "Solbase",
+  description: "A basic prediction marketplace on Solana"
 };
 
 export default function RootLayout({
@@ -24,11 +25,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="w-full h-screen">
+    <html lang="en" className="h-full w-full" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased w-full h-screen flex flex-col items-center justify-center`}
+        className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen w-full flex-col bg-background text-foreground antialiased`}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <NavBar />
+          <main className="flex w-full flex-1 items-center justify-center px-4 py-8">
+            {children}
+          </main>
+          <SiteFooter />
+        </Providers>
       </body>
     </html>
   );

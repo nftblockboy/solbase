@@ -34,7 +34,7 @@ export default async function ReportDetailPage({ params }: PageProps) {
   }
 
   return (
-    <main className="mx-auto flex min-h-[60vh] w-full max-w-4xl flex-col gap-6 px-5 py-10">
+    <div className="mx-auto flex w-full max-w-4xl flex-col gap-6">
       <div className="flex items-start justify-between gap-4">
         <div className="space-y-1">
           <h1 className="text-3xl font-bold text-slate-900">Report details</h1>
@@ -46,6 +46,6 @@ export default async function ReportDetailPage({ params }: PageProps) {
       </div>
 
       <ReportDetail report={report} />
-    </main>
+    </div>
   );
 }

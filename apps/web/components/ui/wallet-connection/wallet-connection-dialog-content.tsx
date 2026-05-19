@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useWalletConnection } from "@solana/react-hooks";
 import { WalletConnectionFooter } from "./wallet-connection-footer";
 import { WalletConnectionHeader } from "./wallet-connection-header";
@@ -27,8 +27,12 @@ export function WalletConnectionDialogContent({
   const activeConnectorId =
     status === "connected" ? wallet?.connector.id : undefined;
 
+  const prevStatusRef = useRef(status);
+
   useEffect(() => {
-    if (status === "connected") {
+    const prevStatus = prevStatusRef.current;
+    prevStatusRef.current = status;
+    if (prevStatus !== "connected" && status === "connected") {
       onConnected?.();
     }
   }, [status, onConnected]);

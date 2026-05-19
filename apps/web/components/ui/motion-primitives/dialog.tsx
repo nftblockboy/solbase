@@ -1,6 +1,6 @@
 'use client';
 import { AnimatePresence, motion, Transition, Variants } from 'motion/react';
-import React, { createContext, useContext, useEffect, useRef } from 'react';
+import React, { createContext, useContext, useEffect, useLayoutEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { useId } from 'react';
 import { createPortal } from 'react-dom';
@@ -30,6 +30,10 @@ const defaultVariants: Variants = {
   animate: {
     opacity: 1,
     scale: 1,
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.9,
   },
 };
 
@@ -100,8 +104,11 @@ function Dialog({
   }, [dialogRef, isOpen, setIsOpen]);
 
   useEffect(() => {
-    if (isOpen && dialogRef.current) {
-      dialogRef.current.showModal();
+    if (!isOpen) return;
+
+    const dialog = dialogRef.current;
+    if (dialog && !dialog.open) {
+      dialog.showModal();
     }
   }, [isOpen]);
 
@@ -153,7 +160,7 @@ function DialogTrigger({ children, className }: DialogTriggerProps) {
     <button
       onClick={context.handleTrigger}
       className={cn(
-        'inline-flex items-center justify-center rounded-md text-sm font-medium',
+        'inline-flex items-center justify-center rounded-none text-sm font-medium',
         'transition-colors focus-visible:ring-2 focus-visible:outline-hidden',
         'focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
         className
@@ -208,6 +215,14 @@ function DialogContent({ children, className, container }: DialogContentProps) {
     onAnimationComplete,
   } = context;
 
+  useLayoutEffect(() => {
+    if (!isOpen) return;
+    const dialog = dialogRef.current;
+    if (dialog && !dialog.open) {
+      dialog.showModal();
+    }
+  }, [isOpen, dialogRef]);
+
   const content = (
     <AnimatePresence mode='wait'>
       {isOpen && (
@@ -231,7 +246,7 @@ function DialogContent({ children, className, container }: DialogContentProps) {
           transition={transition}
           onAnimationComplete={onAnimationComplete}
           className={cn(
-            'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform rounded-lg border border-zinc-200 p-0 shadow-lg dark:border dark:border-zinc-700',
+            'fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 transform rounded-none border border-border bg-card p-0 shadow-lg',
             'backdrop:bg-black/50 backdrop:backdrop-blur-xs',
             'open:flex open:flex-col',
             className
@@ -288,7 +303,7 @@ function DialogDescription({ children, className }: DialogDescriptionProps) {
   return (
     <p
       id={context.ids.description}
-      className={cn('text-base text-zinc-500', className)}
+      className={cn('text-base text-muted', className)}
     >
       {children}
     </p>
@@ -311,9 +326,9 @@ function DialogClose({ className, children, disabled }: DialogCloseProps) {
       type='button'
       aria-label='Close dialog'
       className={cn(
-        'absolute top-4 right-4 rounded-xs opacity-70 transition-opacity',
+        'absolute top-4 right-4 rounded-none opacity-70 transition-opacity',
         'hover:opacity-100 focus:ring-2 focus:outline-hidden',
-        'focus:ring-zinc-500 focus:ring-offset-2 disabled:pointer-events-none',
+        'focus:ring-ring focus:ring-offset-2 focus:ring-offset-background disabled:pointer-events-none',
         className
       )}
       disabled={disabled}

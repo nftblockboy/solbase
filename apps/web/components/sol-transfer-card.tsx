@@ -52,7 +52,7 @@ export function SolTransferCard() {
   }
 
   return (
-    <section className="space-y-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <section className="space-y-4 rounded-none border border-slate-200 bg-white p-5 shadow-sm">
       <div className="space-y-1">
         <p className="text-xs font-semibold uppercase tracking-wide text-slate-600">
           SOL Transfer
@@ -77,7 +77,7 @@ export function SolTransferCard() {
           value={destination}
           onChange={(event) => setDestination(event.target.value)}
           placeholder="Destination wallet address"
-          className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+          className="w-full rounded-none border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
         />
       </div>
       <div className="space-y-2">
@@ -94,7 +94,7 @@ export function SolTransferCard() {
           type="number"
           min="0"
           step="0.001"
-          className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+          className="w-full rounded-none border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
         />
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -103,13 +103,13 @@ export function SolTransferCard() {
           type="button"
           onClick={() => void sendSol()}
           disabled={wallet.status !== "connected" || isSending}
-          className="rounded-lg bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-none bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {isSending ? "Sending…" : "Send SOL"}
         </button>
       </div>
       {signature ? (
-        <div className="rounded border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+        <div className="rounded-none border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
           <p className="font-semibold">Transfer sent</p>
           <a
             className="text-sky-700 underline"

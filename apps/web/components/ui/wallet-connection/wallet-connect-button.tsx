@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/motion-primitives/dialog";
+import { navControlClassName } from "@/components/core/nav-control-styles";
 import { cn } from "@/lib/utils";
 import { WalletConnectionDialogContent } from "./wallet-connection-dialog-content";
 
@@ -17,7 +18,7 @@ function truncate(address: string) {
   return `${address.slice(0, 4)}…${address.slice(-4)}`;
 }
 
-export function WalletConnectButton() {
+export function WalletConnectButton({content = "Connect"}: {content?: React.ReactNode}) {
   const wallet = useWallet();
   const [open, setOpen] = useState(false);
 
@@ -31,24 +32,20 @@ export function WalletConnectButton() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className={cn(
-          "inline-flex w-full items-center justify-between gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-900 shadow-sm transition hover:bg-slate-50"
-        )}
+        className={cn(navControlClassName, "whitespace-nowrap px-3")}
       >
         {address ? (
           <span className="font-mono">{truncate(address)}</span>
         ) : (
-          <span>Connect wallet</span>
+          <span>{content}</span>
         )}
       </button>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="w-full max-w-md bg-white p-6 dark:bg-zinc-900">
+        <DialogContent className="w-full max-w-md bg-card p-6">
           <DialogHeader>
-            <DialogTitle className="text-zinc-900 dark:text-white">
-              Wallet
-            </DialogTitle>
-            <DialogDescription className="text-zinc-600 dark:text-zinc-400">
+            <DialogTitle className="text-foreground">Wallet</DialogTitle>
+            <DialogDescription className="text-muted">
               Connect, switch, or disconnect your wallet.
             </DialogDescription>
           </DialogHeader>
@@ -56,6 +53,7 @@ export function WalletConnectButton() {
             <WalletConnectionDialogContent
               title="Wallet connection"
               description="Pick any discovered connector and manage connect / disconnect."
+              onConnected={() => setOpen(false)}
             />
           </div>
           <DialogClose />

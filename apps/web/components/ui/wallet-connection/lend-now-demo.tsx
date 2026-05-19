@@ -8,7 +8,7 @@ export function LendNowDemo() {
       onConnectedClick={() => {
         console.log("Lend flow started");
       }}
-      className="rounded-lg bg-zinc-950 px-4 py-2 text-sm font-medium text-white hover:bg-zinc-900 dark:bg-white dark:text-zinc-900 dark:hover:bg-zinc-100"
+      className="rounded-none bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition hover:opacity-90"
       dialogTitle="Connect wallet"
       dialogDescription="Choose a wallet to lend with."
     >

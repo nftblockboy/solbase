@@ -21,7 +21,7 @@ export function WalletConnectionHeader({
         <p className="text-lg font-semibold">{title}</p>
         <p className="text-sm text-muted">{description}</p>
       </div>
-      <span className="rounded-full bg-cream px-3 py-1 text-xs font-semibold uppercase tracking-wide text-foreground/80">
+      <span className="rounded-none bg-cream px-3 py-1 text-xs font-semibold uppercase tracking-wide text-foreground/80">
         {status === "connected" ? "Connected" : "Not connected"}
       </span>
     </div>

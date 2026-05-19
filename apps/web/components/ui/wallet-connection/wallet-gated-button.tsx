@@ -60,7 +60,7 @@ export function WalletGatedButton({
         type="button"
         onClick={handleTriggerClick}
         className={cn(
-          "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-hidden focus-visible:ring-offset-2",
+          "inline-flex items-center justify-center rounded-none text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:outline-hidden focus-visible:ring-offset-2",
           className
         )}
       >
@@ -68,12 +68,10 @@ export function WalletGatedButton({
       </button>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="w-full max-w-md bg-white p-6 dark:bg-zinc-900">
+        <DialogContent className="w-full max-w-md bg-card p-6">
           <DialogHeader>
-            <DialogTitle className="text-zinc-900 dark:text-white">
-              {dialogTitle}
-            </DialogTitle>
-            <DialogDescription className="text-zinc-600 dark:text-zinc-400">
+            <DialogTitle className="text-foreground">{dialogTitle}</DialogTitle>
+            <DialogDescription className="text-muted">
               {dialogDescription}
             </DialogDescription>
           </DialogHeader>

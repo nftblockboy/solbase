@@ -26,20 +26,15 @@ export default async function ReportsPage() {
   const reports = await fetchReportArchive();
 
   return (
-    <main className="mx-auto flex min-h-[60vh] w-full max-w-4xl flex-col gap-6 px-5 py-10">
-      <div className="flex items-start justify-between gap-4">
-        <div className="space-y-1">
-          <h1 className="text-3xl font-bold text-slate-900">Report archive</h1>
-          <p className="text-slate-700">
-            Browse archived scout reports. Latest generated report:{" "}
-            <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs">
-              GET /api/scout
-            </code>
-          </p>
-        </div>
-        <Link className="text-sm text-sky-700 underline" href="/">
-          Back to home
-        </Link>
+    <div className="mx-auto flex w-full max-w-4xl flex-col gap-6">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold text-slate-900">Report archive</h1>
+        <p className="text-slate-700">
+          Browse archived scout reports. Latest generated report:{" "}
+          <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs">
+            GET /api/scout
+          </code>
+        </p>
       </div>
 
       {reports.length === 0 ? (
@@ -76,6 +71,6 @@ export default async function ReportsPage() {
           ))}
         </div>
       )}
-    </main>
+    </div>
   );
 }

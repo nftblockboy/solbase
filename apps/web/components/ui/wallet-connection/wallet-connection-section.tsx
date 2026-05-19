@@ -31,7 +31,7 @@ export function WalletConnectionSection({
   return (
     <section
       className={[
-        "w-full max-w-3xl space-y-4 rounded-2xl border border-border-low bg-card p-6 shadow-[0_20px_80px_-50px_rgba(0,0,0,0.35)]",
+        "w-full max-w-3xl space-y-4 rounded-none border border-border-low bg-card p-6 shadow-[0_20px_80px_-50px_rgba(0,0,0,0.35)]",
         className
       ]
         .filter(Boolean)
