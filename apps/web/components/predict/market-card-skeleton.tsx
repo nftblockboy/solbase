@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { MarketCardFrame } from "./market-card-frame";
 
 type MarketCardSkeletonProps = Readonly<{
   className?: string;
@@ -6,11 +7,8 @@ type MarketCardSkeletonProps = Readonly<{
 
 export function MarketCardSkeleton({ className }: MarketCardSkeletonProps) {
   return (
-    <div
-      className={cn(
-        "flex h-[200px] flex-col rounded-none border border-border bg-card p-3 animate-pulse",
-        className
-      )}
+    <MarketCardFrame
+      className={cn("h-[200px] animate-pulse", className)}
       aria-hidden
     >
       <div className="flex items-start gap-3">
@@ -28,7 +26,7 @@ export function MarketCardSkeleton({ className }: MarketCardSkeletonProps) {
           <div className="h-3 w-20 bg-cream/60" />
         </div>
       </div>
-    </div>
+    </MarketCardFrame>
   );
 }
 

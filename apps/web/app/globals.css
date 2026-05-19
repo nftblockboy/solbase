@@ -12,6 +12,12 @@
   --primary: #7c3aed;
   --accent-foreground: #ffffff;
   --ring: #7c3aed;
+  --surface-glass: color-mix(in srgb, var(--card) 72%, transparent);
+  --surface-glass-border: color-mix(in srgb, var(--border) 55%, transparent);
+  --shadow-float: 0 4px 24px -4px rgba(15, 23, 42, 0.1),
+    0 12px 48px -12px rgba(124, 58, 237, 0.1);
+  --shadow-float-hover: 0 8px 32px -4px rgba(15, 23, 42, 0.14),
+    0 16px 56px -12px rgba(124, 58, 237, 0.14);
 }
 
 .dark {
@@ -26,6 +32,12 @@
   --primary: #a78bfa;
   --accent-foreground: #0a0a0a;
   --ring: #a78bfa;
+  --surface-glass: color-mix(in srgb, var(--card) 78%, transparent);
+  --surface-glass-border: color-mix(in srgb, var(--border) 50%, transparent);
+  --shadow-float: 0 4px 24px -4px rgba(0, 0, 0, 0.45),
+    0 12px 48px -12px rgba(167, 139, 250, 0.12);
+  --shadow-float-hover: 0 8px 32px -4px rgba(0, 0, 0, 0.55),
+    0 16px 56px -12px rgba(167, 139, 250, 0.18);
 }
 
 @theme inline {
@@ -48,6 +60,14 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+@utility glass-surface {
+  background: var(--surface-glass);
+  border: 1px solid var(--surface-glass-border);
+  box-shadow: var(--shadow-float);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 /** Hide scrollbars while keeping overflow scroll (e.g. category tab row). */

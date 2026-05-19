@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from "react";
 import { cn } from "@/lib/utils";
+import { Surface } from "@/components/ui/surface";
 
 type SwapCardProps = PropsWithChildren<{
   className?: string;
@@ -7,13 +8,8 @@ type SwapCardProps = PropsWithChildren<{
 
 export function SwapCard({ children, className }: SwapCardProps) {
   return (
-    <div
-      className={cn(
-        "rounded-none border border-border bg-card p-3 shadow-[0_20px_80px_-50px_rgba(0,0,0,0.35)]",
-        className
-      )}
-    >
+    <Surface variant="card" className={cn("p-3", className)}>
       {children}
-    </div>
+    </Surface>
   );
 }

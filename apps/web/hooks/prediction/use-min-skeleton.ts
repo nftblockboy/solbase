@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 /** Keeps skeleton visible for at least minMs so loading state is perceptible. */
 export function useMinSkeleton(active: boolean, minMs = 220): boolean {
-  const [visible, setVisible] = useState(active);
+  const [visible, setVisible] = useState(() => active);
   const shownAtRef = useRef<number | null>(null);
 
   useEffect(() => {

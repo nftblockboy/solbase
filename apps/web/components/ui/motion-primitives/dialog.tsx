@@ -2,6 +2,7 @@
 import { AnimatePresence, motion, Transition, Variants } from 'motion/react';
 import React, { createContext, useContext, useEffect, useLayoutEffect, useRef } from 'react';
 import { cn } from '@/lib/utils';
+import { surfaceClassName } from '@/components/ui/surface';
 import { useId } from 'react';
 import { createPortal } from 'react-dom';
 import { X } from 'lucide-react';
@@ -246,9 +247,11 @@ function DialogContent({ children, className, container }: DialogContentProps) {
           transition={transition}
           onAnimationComplete={onAnimationComplete}
           className={cn(
-            'fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 transform rounded-none border border-border bg-card p-0 shadow-lg',
+            surfaceClassName(
+              'chrome',
+              'fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 transform p-0 open:flex open:flex-col'
+            ),
             'backdrop:bg-black/50 backdrop:backdrop-blur-xs',
-            'open:flex open:flex-col',
             className
           )}
         >

@@ -11,6 +11,7 @@ import {
 } from "@/lib/prediction/market-display";
 import { getMarketPricing } from "@/lib/prediction/market-pricing";
 import { formatNumber, toRawUsd } from "@/lib/prediction/utils";
+import { MarketCardFrame } from "./market-card-frame";
 
 type MarketCardMultiProps = Readonly<{
   event: PredictionEvent;
@@ -35,12 +36,7 @@ export function MarketCardMulti({ event, className }: MarketCardMultiProps) {
     : "/predict";
 
   return (
-    <article
-      className={cn(
-        "flex flex-col rounded-none border border-border bg-card p-3 transition hover:border-accent/50",
-        className
-      )}
-    >
+    <MarketCardFrame className={className}>
       <Link href={href} className="flex items-start gap-3">
         <EventThumbnail
           imageUrl={event.metadata?.imageUrl}
@@ -93,7 +89,7 @@ export function MarketCardMulti({ event, className }: MarketCardMultiProps) {
         )}
         {volume ? <span className="tabular-nums">${volume} vol</span> : null}
       </footer>
-    </article>
+    </MarketCardFrame>
   );
 }
 

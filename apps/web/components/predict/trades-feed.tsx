@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import type { Trade } from "@/lib/prediction/api";
 import { truncateAddress, toRawUsd } from "@/lib/prediction/utils";
 import { useTrades } from "@/hooks/prediction/use-trades";
+import { Surface } from "@/components/ui/surface";
 
 type TradesFeedProps = Readonly<{
   open: boolean;
@@ -58,9 +59,11 @@ function TradesFeedPanel({
   const { data: trades, isLoading, isError, isFetching } = useTrades();
 
   return (
-    <aside
+    <Surface
+      as="aside"
+      variant="panel"
       className={cn(
-        "flex flex-col rounded-none border border-border bg-card lg:max-h-[calc(100vh-12rem)] lg:overflow-hidden",
+        "flex flex-col lg:max-h-[calc(100vh-12rem)] lg:overflow-hidden",
         className
       )}
     >
@@ -115,7 +118,7 @@ function TradesFeedPanel({
           </div>
         ) : null}
       </div>
-    </aside>
+    </Surface>
   );
 }
 

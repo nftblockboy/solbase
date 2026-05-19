@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
 import type { PredictionEvent } from "@/lib/prediction/api";
 import { getEventTitle, getRenderableMarkets } from "@/lib/prediction/market-display";
 import { getMarketPricing } from "@/lib/prediction/market-pricing";
 import { formatNumber, toRawUsd } from "@/lib/prediction/utils";
+import { MarketCardFrame } from "./market-card-frame";
 
 type MarketCardBinaryProps = Readonly<{
   event: PredictionEvent;
@@ -25,12 +25,7 @@ export function MarketCardBinary({ event, className }: MarketCardBinaryProps) {
   const href = `/predict/market/${market.marketId}?event=${event.eventId}`;
 
   return (
-    <article
-      className={cn(
-        "flex flex-col rounded-none border border-border bg-card p-3 transition hover:border-accent/50",
-        className
-      )}
-    >
+    <MarketCardFrame className={className}>
       <Link href={href} className="flex items-start gap-3">
         {event.metadata?.imageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -74,6 +69,6 @@ export function MarketCardBinary({ event, className }: MarketCardBinaryProps) {
         </Link>
         <span className="tabular-nums">${volume} vol</span>
       </footer>
-    </article>
+    </MarketCardFrame>
   );
 }

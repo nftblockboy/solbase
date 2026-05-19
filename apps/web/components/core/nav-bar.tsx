@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "./theme-toggle";
 import { WalletConnectButton } from "../ui/wallet-connection/wallet-connect-button";
+import { Surface } from "@/components/ui/surface";
 
 const navLinks = [
   { href: "/swap", label: "Swap" },
@@ -15,7 +16,11 @@ export function NavBar() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex w-full items-center justify-between border-b border-border bg-background px-4 py-2">
+    <Surface
+      as="nav"
+      variant="chrome"
+      className="flex w-full items-center justify-between px-4 py-2"
+    >
       <div className="flex items-center justify-start space-x-6">
         <Link href="/" className="flex items-center space-x-2" aria-label="Home">
           <svg
@@ -55,6 +60,6 @@ export function NavBar() {
         <ThemeToggle />
         <WalletConnectButton />
       </div>
-    </nav>
+    </Surface>
   );
 }

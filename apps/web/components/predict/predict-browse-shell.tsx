@@ -35,6 +35,7 @@ export function PredictBrowseShell() {
 
   const {
     data,
+    isLoading,
     isPending,
     isFetching,
     isFetchingNextPage,
@@ -47,7 +48,9 @@ export function PredictBrowseShell() {
   const { data: trades } = useTrades();
   const latestTrade = trades?.[0];
 
-  const hasData = Boolean(data?.pages?.length);
+  const hasData = Boolean(
+    data?.pages?.some((page) => (page.data?.length ?? 0) > 0)
+  );
   const browseKey = `${category}|${subcategory ?? ""}|${filter ?? ""}|${sortOption}`;
   const isTransitioning = useBrowseTransitionLoading(
     browseKey,
@@ -57,6 +60,7 @@ export function PredictBrowseShell() {
   const isQueryGridLoading =
     isTransitioning ||
     isBrowseGridLoading(
+      isLoading,
       isPending,
       isFetching,
       isFetchingNextPage,
@@ -79,6 +83,8 @@ export function PredictBrowseShell() {
   );
 
   const isBackgroundFetching = isBrowseBackgroundFetching(
+    isLoading,
+    isPending,
     isFetching,
     isFetchingNextPage,
     hasData,

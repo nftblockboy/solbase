@@ -4,6 +4,8 @@ import { useWalletConnection } from "@solana/react-hooks";
 import { WalletConnectionFooter } from "./wallet-connection-footer";
 import { WalletConnectionHeader } from "./wallet-connection-header";
 import { WalletConnectorGrid } from "./wallet-connector-grid";
+import { Surface } from "@/components/ui/surface";
+import { cn } from "@/lib/utils";
 
 type WalletConnectionSectionProps = Readonly<{
   title?: string;
@@ -29,13 +31,10 @@ export function WalletConnectionSection({
   }
 
   return (
-    <section
-      className={[
-        "w-full max-w-3xl space-y-4 rounded-none border border-border-low bg-card p-6 shadow-[0_20px_80px_-50px_rgba(0,0,0,0.35)]",
-        className
-      ]
-        .filter(Boolean)
-        .join(" ")}
+    <Surface
+      as="section"
+      variant="card"
+      className={cn("w-full max-w-3xl space-y-4 p-6", className)}
     >
       <WalletConnectionHeader
         title={title}
@@ -53,6 +52,6 @@ export function WalletConnectionSection({
         onDisconnect={() => void disconnect()}
         disconnectDisabled={status !== "connected"}
       />
-    </section>
+    </Surface>
   );
 }

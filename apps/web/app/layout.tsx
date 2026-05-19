@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { NavBar, SiteFooter } from "@/components/core";
+import { AppShell } from "@/components/core";
 import "./globals.css";
 import { Providers } from "./providers";
 
@@ -30,11 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} flex min-h-screen w-full flex-col bg-background text-foreground antialiased`}
       >
         <Providers>
-          <NavBar />
-          <main className="flex w-full flex-1 flex-col items-stretch px-4 pt-2 pb-4">
-            {children}
-          </main>
-          <SiteFooter />
+          <AppShell>{children}</AppShell>
         </Providers>
       </body>
     </html>

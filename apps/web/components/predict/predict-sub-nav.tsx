@@ -9,6 +9,7 @@ import {
   Zap,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Surface } from "@/components/ui/surface";
 
 export type PredictSubNavTab =
   | "browse"
@@ -37,7 +38,10 @@ type PredictSubNavProps = Readonly<{
 export function PredictSubNav({ active, onChange }: PredictSubNavProps) {
   return (
     <nav className="flex justify-center py-2" aria-label="Predict sections">
-      <div className="inline-flex flex-wrap items-center justify-center gap-0.5 rounded-none border border-border-low bg-card/80 p-1">
+      <Surface
+        variant="chrome"
+        className="inline-flex flex-wrap items-center justify-center gap-0.5 p-1"
+      >
         {TABS.map(({ id, label, icon: Icon }) => (
           <button
             key={id}
@@ -54,7 +58,7 @@ export function PredictSubNav({ active, onChange }: PredictSubNavProps) {
             {label}
           </button>
         ))}
-      </div>
+      </Surface>
     </nav>
   );
 }

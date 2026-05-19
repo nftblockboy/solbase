@@ -11,7 +11,8 @@ export function useBrowseTransitionLoading(
   isFetching: boolean,
   isPending: boolean
 ): boolean {
-  const [transitioning, setTransitioning] = useState(false);
+  // Start true so the first paint uses skeletons, not a faded empty/stale grid.
+  const [transitioning, setTransitioning] = useState(true);
   const prevKeyRef = useRef(browseKey);
 
   useLayoutEffect(() => {
