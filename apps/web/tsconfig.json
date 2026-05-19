@@ -24,6 +24,7 @@
       "@/components/ui/*": ["./components/ui/*"],
       "@/components/motion-primitives/*": ["./components/ui/motion-primitives/*"],
       "@/hooks/*": ["./app/hooks/*"],
+      "@/hooks/prediction/*": ["./hooks/prediction/*"],
       "@/lib/*": ["./lib/*"],
       "@/lib/utils": ["./lib/utils.ts"]
     }

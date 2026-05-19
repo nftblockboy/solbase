@@ -1,5 +1,5 @@
-import { PlaceholderPage } from "@/components/core/placeholder-page";
+import { SwapShell } from "@/components/swap";
 
 export default function SwapPage() {
-  return <PlaceholderPage title="Swap" />;
+  return <SwapShell />;
 }

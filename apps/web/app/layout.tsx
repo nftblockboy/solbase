@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         <Providers>
           <NavBar />
-          <main className="flex w-full flex-1 items-center justify-center px-4 py-8">
+          <main className="flex w-full flex-1 flex-col items-stretch px-4 pt-2 pb-4">
             {children}
           </main>
           <SiteFooter />

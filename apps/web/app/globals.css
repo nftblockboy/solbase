@@ -49,3 +49,19 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
+
+/** Hide scrollbars while keeping overflow scroll (e.g. category tab row). */
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+  &::-webkit-scrollbar-thumb,
+  &::-webkit-scrollbar-track {
+    display: none;
+    background: transparent;
+  }
+}

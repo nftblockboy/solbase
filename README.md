@@ -105,6 +105,9 @@ Optional overrides in `apps/web` (or root `.env.local` loaded by Next.js):
 |----------|-------------|
 | `NEXT_PUBLIC_SOLANA_RPC_URL` | Solana RPC endpoint (defaults to devnet) |
 | `NEXT_PUBLIC_SOLANA_WS_URL` | WebSocket endpoint (derived from RPC if unset) |
+| `NEXT_PUBLIC_JUPITER_API_KEY` | Jupiter Prediction API key (required for `/predict` live markets) |
+
+Copy `apps/web/.env.example` to `apps/web/.env.local` and set your Jupiter API key.
 
 ### Other commands
 

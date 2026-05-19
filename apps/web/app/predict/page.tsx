@@ -1,5 +1,5 @@
-import { PlaceholderPage } from "@/components/core/placeholder-page";
+import { PredictBrowseShell } from "@/components/predict";
 
 export default function PredictPage() {
-  return <PlaceholderPage title="Predict" />;
+  return <PredictBrowseShell />;
 }
