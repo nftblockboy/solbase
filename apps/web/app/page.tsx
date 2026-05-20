@@ -1,5 +1,5 @@
-import { PlaceholderPage } from "@/components/core/placeholder-page";
+import { redirect } from "next/navigation";
 
 export default function HomePage() {
-  return <PlaceholderPage title="Home" />;
+  redirect("/markets");
 }

@@ -9,7 +9,7 @@ export function AppShell({ children }: PropsWithChildren) {
       <AmbientBackground />
       <div className="relative z-10 flex min-h-screen w-full flex-col">
         <NavBar />
-        <main className="flex w-full flex-1 flex-col items-stretch px-4 pt-2 pb-4">
+        <main className="flex min-w-0 w-full flex-1 flex-col items-stretch overflow-x-hidden px-4 pt-2 pb-4">
           {children}
         </main>
         <SiteFooter />

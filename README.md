@@ -1,37 +1,70 @@
 # Solbase
 
-**A basic prediction marketplace on Solana.**
+**Bloomberg Terminal meets social trading for prediction markets.**
 
-Create markets, trade on outcomes, and settle positions with a connected wallet.
-
----
-
-## Overview
-
-Solbase is a Solana-native prediction marketplace where users speculate on real-world outcomes. Markets pose simple questions—often binary (yes/no) or a small set of outcomes—and participants buy shares in the result they believe will happen.
-
-The core loop:
-
-1. **Markets** — Browse questions with clear resolution criteria (e.g. “Will X happen by date Y?”).
-2. **Trading** — Connect a Solana wallet and take a position on an outcome.
-3. **Resolution** — When the market settles, winning shares are redeemed.
-
-This repo is early-stage: wallet connection and UI foundations exist in the web app; market listing, trading, and settlement flows are under active development.
+A Solana-native prediction-market intelligence platform: discover markets, track performance, follow top traders, and discuss narratives—with wallet-connected trading and AI-powered portfolio insights on the roadmap.
 
 ---
 
-## Features
+## Product vision
+
+Solbase is not a DEX-first product. It is built for **social prediction trading** and **market intelligence**:
+
+- Browse and analyze prediction markets in one place
+- Connect a Solana wallet to participate as trading flows ship
+- Follow traders, climb leaderboards, and join community discussions (planned)
+- Get AI-generated portfolio analysis and market context (planned)
+
+The experience is designed to feel like a professional terminal for prediction markets, with the social layer of a trading community.
+
+---
+
+## MVP scope
 
 | Area | Status |
 |------|--------|
-| **Wallet** | Connect via Wallet Standard (Phantom, Solflare, Backpack, etc.) |
-| **Markets** | Browse and view prediction markets — planned |
-| **Positions** | Take positions on outcomes — planned |
-| **Settlement** | Resolve markets and distribute payouts — planned |
+| **Markets** — browse grid, categories, filters, market detail | Implemented |
+| **Wallet** — connect via Wallet Standard (Phantom, Solflare, Backpack, etc.) | Implemented |
+| **Theme** — light/dark toggle | Implemented |
+| **Portfolio** | Placeholder |
+| **Leaderboard** | Placeholder |
+| **Community** | Placeholder |
+| **Profile** | Placeholder |
+| **Trading / positions / settlement** | Planned |
+| **AI portfolio analysis** | Planned |
 
-### Current status
+---
 
-The monorepo includes a Next.js frontend with Solana wallet integration and shared UI components. Prediction market flows (create, trade, resolve) are the next build-out.
+## Core features (implemented)
+
+- **Markets** (`/markets`) — Live prediction market discovery via Jupiter Prediction API (cards, categories, sort/filter, trades feed)
+- **Market detail** (`/markets/market/[id]?event=...`) — Outcome pricing, volume, related markets within an event
+- **Wallet connect** — Global nav wallet button; Wallet Standard auto-discovery
+- **Legacy URLs** — Permanent redirects from `/predict` and `/predict/market/*` to `/markets` (query params preserved)
+
+---
+
+## Planned features
+
+- AI portfolio analysis (P&L, risk, positioning insights)
+- Trader following and public profiles
+- Leaderboard rankings (performance, consistency)
+- Community discussions (markets, traders, narratives)
+- Market intelligence (alerts, narratives, cross-market context)
+- Social prediction trading (copy/follow flows, shared theses)
+- On-chain position tracking, trading, and settlement
+
+---
+
+## Navigation
+
+| Route | Purpose |
+|-------|---------|
+| `/markets` | Default landing — prediction market discovery |
+| `/portfolio` | Positions, P&L, AI portfolio analysis (placeholder) |
+| `/leaderboard` | Top traders by performance (placeholder) |
+| `/community` | Market and trader discussion (placeholder) |
+| `/profile` | Public trading profile and reputation (placeholder) |
 
 ---
 
@@ -39,17 +72,18 @@ The monorepo includes a Next.js frontend with Solana wallet integration and shar
 
 - **Frontend:** Next.js 16 (`apps/web`), React 19, Tailwind CSS
 - **Chain:** Solana — `@solana/react-hooks`, Wallet Standard connectors
+- **Data:** Jupiter Prediction API (`NEXT_PUBLIC_JUPITER_API_KEY`)
 - **Monorepo:** pnpm workspaces + Turborepo
 - **Shared packages:** `packages/platform`, `packages/ui`, `packages/crypto`, `packages/ai-agents` (auxiliary scout/report workflows)
-- **Jobs:** `jobs/*` — background workers (e.g. market data refresh, reports)
-- **Backend:** `main.go` at repo root — Go API placeholder for future market/trading services
+- **Jobs:** `jobs/*` — background workers (market data refresh, reports)
+- **Backend:** `main.go` at repo root — Go API placeholder for future services
 
 ---
 
 ## Monorepo layout
 
 ```
-apps/web            # Next.js prediction market UI
+apps/web            # Next.js prediction-market intelligence UI
 packages/ui         # Shared UI components
 packages/platform   # Shared types and schemas
 packages/crypto     # Crypto utilities
@@ -66,6 +100,7 @@ main.go             # Go API (placeholder)
 flowchart LR
   user[User] --> web[apps/web]
   web --> wallet[SolanaWallet]
+  web --> jupiter[JupiterPredictionAPI]
   web --> api[FutureAPI]
   api --> chain[Solana]
 ```
@@ -88,7 +123,7 @@ pnpm install
 pnpm -F @solbase/web dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000) (redirects to `/markets`).
 
 If `pnpm` is not on your PATH:
 
@@ -105,7 +140,7 @@ Optional overrides in `apps/web` (or root `.env.local` loaded by Next.js):
 |----------|-------------|
 | `NEXT_PUBLIC_SOLANA_RPC_URL` | Solana RPC endpoint (defaults to devnet) |
 | `NEXT_PUBLIC_SOLANA_WS_URL` | WebSocket endpoint (derived from RPC if unset) |
-| `NEXT_PUBLIC_JUPITER_API_KEY` | Jupiter Prediction API key (required for `/predict` live markets) |
+| `NEXT_PUBLIC_JUPITER_API_KEY` | Jupiter Prediction API key (required for live `/markets` data) |
 
 Copy `apps/web/.env.example` to `apps/web/.env.local` and set your Jupiter API key.
 
@@ -117,15 +152,6 @@ pnpm build        # Build all packages
 pnpm typecheck    # Typecheck all packages
 pnpm lint         # Lint all packages
 ```
-
----
-
-## Roadmap
-
-- Market creation and listing
-- Backend or on-chain position tracking
-- Resolution and payout flow
-- Liquidity mechanism (order book or pool-based trading)
 
 ---
 

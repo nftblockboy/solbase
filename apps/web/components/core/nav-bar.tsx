@@ -3,14 +3,28 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { SettingsGearButton } from "@/components/settings";
 import { ThemeToggle } from "./theme-toggle";
 import { WalletConnectButton } from "../ui/wallet-connection/wallet-connect-button";
 import { Surface } from "@/components/ui/surface";
 
 const navLinks = [
-  { href: "/swap", label: "Swap" },
-  { href: "/predict", label: "Predict" }
+  { href: "/markets", label: "Markets" },
+  { href: "/portfolio", label: "Portfolio" },
+  { href: "/leaderboard", label: "Leaderboard" },
+  { href: "/community", label: "Community" },
 ] as const;
+
+function isNavActive(pathname: string, href: string) {
+  if (href === "/leaderboard") {
+    return (
+      pathname === href ||
+      pathname.startsWith(`${href}/`) ||
+      pathname.startsWith("/trader/")
+    );
+  }
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export function NavBar() {
   const pathname = usePathname();
@@ -19,15 +33,19 @@ export function NavBar() {
     <Surface
       as="nav"
       variant="chrome"
-      className="flex w-full items-center justify-between px-4 py-2"
+      className="flex w-full min-w-0 items-center justify-between gap-2 px-2 py-2 sm:px-4"
     >
-      <div className="flex items-center justify-start space-x-6">
-        <Link href="/" className="flex items-center space-x-2" aria-label="Home">
+      <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-4">
+        <Link
+          href="/markets"
+          className="flex shrink-0 items-center"
+          aria-label="Solbase home"
+        >
           <svg
             width="24"
             height="24"
             viewBox="0 0 24 24"
-            className="mr-2"
+            className="shrink-0"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -37,14 +55,20 @@ export function NavBar() {
           </svg>
         </Link>
 
-        <ul className="flex space-x-6">
+        <ul
+          className={cn(
+            "flex min-w-0 flex-1 items-center gap-3 overflow-x-auto",
+            "scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none]",
+            "[&::-webkit-scrollbar]:hidden"
+          )}
+        >
           {navLinks.map(({ href, label }) => (
-            <li key={href}>
+            <li key={href} className="shrink-0">
               <Link
                 href={href}
                 className={cn(
-                  "font-medium transition",
-                  pathname === href
+                  "whitespace-nowrap text-sm font-medium transition sm:text-base",
+                  isNavActive(pathname, href)
                     ? "text-accent"
                     : "text-foreground/80 hover:text-accent"
                 )}
@@ -56,8 +80,9 @@ export function NavBar() {
         </ul>
       </div>
 
-      <div className="flex items-center space-x-2">
+      <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
         <ThemeToggle />
+        <SettingsGearButton />
         <WalletConnectButton />
       </div>
     </Surface>

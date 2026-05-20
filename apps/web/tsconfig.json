@@ -24,7 +24,13 @@
       "@/components/ui/*": ["./components/ui/*"],
       "@/components/motion-primitives/*": ["./components/ui/motion-primitives/*"],
       "@/hooks/*": ["./app/hooks/*"],
+      "@/hooks/use-mounted": ["./hooks/use-mounted.ts"],
       "@/hooks/prediction/*": ["./hooks/prediction/*"],
+      "@/hooks/portfolio/*": ["./hooks/portfolio/*"],
+      "@/hooks/leaderboard/*": ["./hooks/leaderboard/*"],
+      "@/hooks/profile/*": ["./hooks/profile/*"],
+      "@/hooks/community/*": ["./hooks/community/*"],
+      "@/hooks/markets/*": ["./hooks/markets/*"],
       "@/lib/*": ["./lib/*"],
       "@/lib/utils": ["./lib/utils.ts"]
     }

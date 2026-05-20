@@ -16,7 +16,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Solbase",
-  description: "A basic prediction marketplace on Solana"
+  description:
+    "Prediction-market intelligence and social trading on Solana"
 };
 
 export default function RootLayout({
